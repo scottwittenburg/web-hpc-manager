@@ -35,7 +35,7 @@ class GirderDataUploader(object) :
             raise Exception('Error: girderClientPath is required and should point to location where girderClient.py exists.')
 
         sys.path.insert(0, girderClientPath)
-        gc = __import__('girderClient')
+        gc = __import__('GirderClient')
 
         self.gclient = gc.GirderClient(host=hostname,
                                        port=portnumber)

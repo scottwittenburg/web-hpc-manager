@@ -47,7 +47,7 @@ class RemoteConnection(Resource):
 
         # Hardcode some paths until we know how to pass our
         # own custom config options to our plugin
-        pathToConnModule = '/home/scott/projects/project-backups-scott-wittenburg/scripts/python/cosmoscripts'
+        pathToConnModule = '/home/scott/projects/Cosmology/web-hpc-manager/src/python/webserver'
         self.mappingFilePath = '/opt/apache-2.4.7/pv-mapping-file/mapping.txt'
 
         try :
