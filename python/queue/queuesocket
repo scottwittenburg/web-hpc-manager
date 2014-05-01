@@ -1,0 +1,169 @@
+#!/usr/bin/python
+
+import socket
+import re
+import subprocess
+import uuid
+import json
+
+###
+### This module sort of fakes a queuing system by listening on
+### a port (only one client may connect at a time) for a few
+### commands related to starting a paraviewweb process and
+### providing it's status over time.
+###
+### Messages:
+###
+### 1) A message of the form: 'submit <path-to-job-script>'
+### causes the script to be run and returns '<jobid>' upon
+### successful process launch.
+###
+### 2) A message of the form: 'status' returns a list of the
+### the jobs this program is tracking and their current status.
+###
+### It is assumed that these are paraviewweb processes, and each
+### process is considered ready ('running') when the process is
+### running and the log file can be found to contain the expression
+### given by the module variable 'readyLineExpr'.
+###
+
+# Some module-level parameters, which host and port to listen on
+HOST = ''
+PORT = 55555
+
+nextJobId = 234567
+
+readyLineExpr = re.compile('Starting factory')
+
+jobMap = {}
+
+
+#-------------------------------------------------------------------------
+# When a 'submit' request comes in, we figure out a logfile path for the
+# process, then start the process and redirect all output and error msgs
+# to the logfile.  We also store a module-level map entry containing the
+# path to the logfile and a reference to the opened process.
+#-------------------------------------------------------------------------
+def handleSubmitRequest(data):
+    global nextJobId
+    global jobMap
+
+    commandExpr = re.compile('submit\s+([^\s\.]+.sh)$')
+    print 'matched submit command format'
+
+    m = commandExpr.search(data)
+    if not m:
+        return 'ERROR: Unecognized submit command: ' + data
+
+    scriptpath = m.group(1)
+    print 'found script path: ' + scriptpath
+
+    regex = re.compile('\.sh')
+    logfilepath = re.sub(regex, '.log', scriptpath)
+    print 'got a log file path: ' + logfilepath
+
+    thisJobId = str(nextJobId)
+
+    with open(logfilepath, "a+") as logfile:
+        try :
+            print 'Attempting to run your script'
+            proc = subprocess.Popen(["/bin/bash", scriptpath], stdout=logfile, stderr=logfile)
+            jobMap[thisJobId] = { 'process': proc,
+                                  'logfile': logfilepath }
+            nextJobId += 1
+        except Exception as inst:
+            print 'ERROR: your script failed to run', inst
+            return 'ERROR: Running your script failed'
+
+    print "Ran script, returning jobId: ", thisJobId
+    return thisJobId
+
+
+#-------------------------------------------------------------------------
+# Here we search through a file, line by line, for a certain expression
+#-------------------------------------------------------------------------
+def readLogCheckReady(logfilepath):
+    with open(logfilepath, 'r') as logfile:
+        for line in logfile:
+            m = readyLineExpr.search(line)
+            if m:
+                return True
+    return False
+
+
+#-------------------------------------------------------------------------
+# When a 'status' message comes in, we will iterate through the map of
+# jobs we are keeping track of, and figure out the status of each.  Then
+# we return a json object giving the status of each process.  In the
+# process, we remove jobs from the map if they are no longer running.
+#-------------------------------------------------------------------------
+def handleStatusRequest(data):
+    global jobMap
+    result = {}
+    removeJobs = []
+
+    for jId in jobMap :
+        jobRecord = jobMap[jId]
+        proc = jobRecord['process']
+        if proc.poll() == None :
+            # process still running
+            logfile = jobRecord['logfile']
+            if readLogCheckReady(logfile) :
+                # process running and also ready
+                result[jId] = 'running'
+            else :
+                # process running but not ready
+                result[jId] = 'starting'
+        else :
+            # Process no longer running, forget about it
+            removeJobs.append(jId)
+
+    # Remove the jobs that weren't running
+    for jobId in removeJobs:
+        jobMap.pop(jobId, None)
+
+    # Return the list of jobs I know about and their status
+    returnVal = json.dumps(result)
+    print 'Returning the jobs list: ' + returnVal
+    return returnVal
+
+
+#-------------------------------------------------------------------------
+# All incoming messages to queuesocket come through this message router.
+#-------------------------------------------------------------------------
+def processRequest(data):
+    if data.startswith('submit'):
+        return handleSubmitRequest(data)
+    elif data.startswith('status'):
+        return handleStatusRequest(data)
+    else:
+        return 'ERROR: Unrecognized command sequence: ' + data
+
+
+###
+### Main script, to run from command line
+###
+if __name__ == "__main__" :
+    # create an INET, STREAMing socket
+    serversocket = socket.socket( socket.AF_INET, socket.SOCK_STREAM)
+
+    # bind the socket to a public host,
+    # and a well-known port
+    serversocket.bind((HOST, PORT))
+
+    # become a server socket
+    serversocket.listen(1)
+
+    while True:
+        conn, addr = serversocket.accept()
+        print 'Connected by', addr
+
+        while True:
+            data = conn.recv(1024)
+            if not data:
+                break
+            response = processRequest(data)
+            conn.send(response)
+
+        conn.close()
+        print 'Connection closed'

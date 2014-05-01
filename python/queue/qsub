@@ -1,0 +1,51 @@
+#!/usr/bin/python
+
+import argparse
+import socket
+
+HOST = ''
+PORT = 55555
+
+
+###
+### The intention of this program is to provide a local version
+### of the 'qsub' program running at Argonne, so that I can develop
+### and test pvweb job launching from a web application.  It is not
+### meant to be a robust implementation, but simply to provide a
+### minimal set of features to a single, local job submitter.
+###
+### This program sends a socket message to the running 'queuesocket'
+### program: 'submit <path-to-script>' causes the listening server
+### to run the process and start tracking it for status requests.
+###
+if __name__ == "__main__" :
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-n", "--numnodes", type=str, default="1", help="The number of nodes to schedule")
+    parser.add_argument("-t", "--walltime", type=str, default="5", help="Number of minutes to request")
+    parser.add_argument("-A", "--project", type=str, default="SkySurvey", help="Project name to use")
+    parser.add_argument("-q", "--queue", type=str, default="pubnet", help="Name of queue to submit to")
+    parser.add_argument("scriptpath", help="Path to the job script to run")
+    args = parser.parse_args()
+
+    # create an INET, STREAMing socket
+    s = socket.socket( socket.AF_INET, socket.SOCK_STREAM)
+
+    # now connect to the socket server
+    try :
+        s.connect((HOST, PORT))
+    except Exception as inst:
+        print 'Unable to connect to queuesocket program, goodbye'
+        exit(1)
+
+    # Issue the submit command along with the path to the script
+    # to be run.
+    s.send('submit ' + args.scriptpath)
+    data = s.recv(1024)
+    s.close()
+
+    # If everything went ok, the queuesocket program returned just a job id
+    if data.startswith('ERROR'):
+        print repr(data)
+    else:
+        print 'project: SkySurvey'
+        print data

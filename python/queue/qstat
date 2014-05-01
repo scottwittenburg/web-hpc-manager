@@ -1,0 +1,53 @@
+#!/usr/bin/python
+
+import socket
+import json
+
+HOST = ''
+PORT = 55555
+
+
+
+###
+### The intention of this program is to provide a local version
+### of the 'qstat' program running at Argonne, so that I can develop
+### and test pvweb job launching from a web application.  It is not
+### meant to be a robust implementation, but simply to provide a
+### minimal set of features to a single, local job submitter.
+###
+### This program interacts (via socket) with another running
+### process called 'queuesocket', which can launch pvweb jobs
+### and keep track of them, indicating via a 'status' message
+### when a job is running (ready to be connected to).
+###
+if __name__ == "__main__" :
+    # create an INET, STREAMing socket
+    s = socket.socket( socket.AF_INET, socket.SOCK_STREAM)
+
+    # now connect to the web server on port 80
+    # - the normal http port
+    try :
+        s.connect((HOST, PORT))
+    except Exception as inst:
+        print 'Unable to connect to queuesocket program, goodbye'
+        exit(1)
+
+    # Send a status message to queuesocket
+    s.send('status')
+    data = s.recv(1024)
+    s.close()
+
+    # First print out a few fixed sample lines
+    print 'JobID   User      WallTime  Nodes  State    Location                 '
+    print '====================================================================='
+    print '235346  jcperez   08:00:00  4      running  [vs32-33],vs47,vs94      '
+    print '235362  nleaf     12:00:00  5      running  vs8,vs22,vs37,vs60,vs69  '
+
+    # Now go through and print out lines for jobs queuesocket is managing
+    jobs = json.loads(data)
+    for jobId in jobs :
+        status = jobs[jobId]
+        location = 'None'
+        if status == 'running' :
+            location = 'solaris'
+        print jobId + '  scottwit    00:05:00   1   ' + status + '   ' + location + '  '

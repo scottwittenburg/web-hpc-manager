@@ -1,0 +1,526 @@
+html, body, div, span, h1, h2, h3, h4, p, a, big, em, font, img, s, small, strong,
+tt, var, b,u,i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, table,
+tbody, tfoot, thead, tr, th, td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    font-family: Arial,sans-serif; font-size: 1em;
+}
+
+.header-bar {
+    background: #333333;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    z-index: 10;
+}
+
+.header-bits {
+    color: white;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.header-btn {
+    height: 50px;
+    float: left;
+}
+
+.header-btn-selected {
+    background-color: #999999;
+}
+
+.header-btn-label {
+    margin: 0 0 0 2px;
+}
+
+.title-element {
+    position: absolute;
+    left: 43%;
+    top: 30%;
+}
+
+.viewport-container {
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    top: 50px;
+}
+
+.remote-connection-container {
+    position: absolute;
+    background: #F0F0F0;
+    width: 700px;
+    top: 60px;
+    left: -740px;
+    height: 300px;
+    z-index:5;
+    border: 1px solid;
+    border-radius: 5px;
+}
+
+.remote-connection-list {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border-radius: 0 0 5px 5px;
+    background: #FFFFFF;
+}
+
+.remote-interact-panel {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border-radius: 0 0 5px 5px;
+    background: #FFFFFF;
+    display: none;
+}
+
+.remote-connection-container-title {
+    position: absolute;
+    top: 5px;
+    left: 230px;
+}
+
+.cosmo-summary-element-container {
+    height: 200px;
+    margin: 10px;
+}
+
+.summary-thumb-container {
+    position: absolute;
+    height: 68px;
+    width: 134px;
+}
+
+.summary-description-container {
+    position: relative;
+    top: 7px;
+    left: 140px;
+    height: 55px;
+    width: 415px;
+    overflow:auto;
+}
+
+.summary-contents-container {
+    height: 180px;
+    border: 1px solid;
+    border-radius: 0 0 5px 5px;
+}
+
+.summary-title-bar {
+    position: relative;
+    background-color: #000;
+    height: 20px;
+    top: 0;
+    border-radius: 5px 5px 0 0;
+}
+
+.summary-title-bar-contents {
+    color: white;
+    margin: 2px 0 0 8px;
+}
+
+.run-summary-description-container {
+    position: relative;
+    top: 21px;
+    left: 10px;
+    right: 13px;
+    height: 96px;
+    width: 543px;
+}
+
+.cosmo-remote-connection-table {
+    position: absolute;
+    width: 100%;
+}
+
+.search-elt {
+    float: left;
+    margin: 2px 3px 0 2px;
+}
+
+.search-results-text {
+    float: right;
+    margin: 5px 3px;
+    padding: 4px 2px 0 1px;
+}
+
+.attr-name-field, .attr-value-field {
+    width: 140px;
+}
+
+.cosmodata {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 600px;
+    overflow: auto;
+}
+
+.visualization-pane {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.cosmology-image-pane {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.pvweb-iframe-pane {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    zIndex: 1;
+    display: none;
+}
+
+.cosmology-data-pane {
+    bottom: 0;
+    left: -600px;
+    position: fixed;
+    top: 50px;
+    width: 600px;
+}
+
+.cosmo-element-title-bar {
+    position: absolute;
+    width: 585px;
+    height: 30px;
+    top: -30px;
+    background-color: rgba(150, 150, 150, 0.9);
+    border-radius: 3px 3px 0 0;
+}
+
+.close-cosmo-element-btn {
+    color: black;
+    cursor: pointer;
+    z-index: 10;
+    position: absolute;
+    right: 3px;
+    top: 3px;
+    font-size: 130%;
+}
+
+.cosmo-element-container {
+    border: 1px solid;
+    border-radius: 1px;
+    height: 515px;
+    width: 585px;
+    margin-bottom: 4px;
+    position: fixed;
+    top: 100px;
+    left: 100px;
+    background-color: rgba(220, 220, 220, 0.8);
+}
+
+.cosmo-element-title-text {
+    position: relative;
+    font-size: 110%;
+    top: 5px;
+    left: 5px;
+}
+
+.image-thumb {
+    cursor: pointer;
+}
+
+.show-metadata-btn {
+    background: white;
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    border-radius: 0 3px 0 0;
+    font-size: 115%;
+    cursor: pointer;
+}
+
+.thumb-container {
+    position: absolute;
+    height: 68px;
+    width: 585px;
+}
+
+.vol_px_sum {
+    position: absolute;
+    left: 2px;
+    top: 2px;
+}
+
+.pts_px_sum {
+    position: absolute;
+    left: 68px;
+    top: 2px;
+}
+
+.vol_px {
+    position: absolute;
+    left: 2px;
+    top: 2px;
+}
+
+.vol_py {
+    position: absolute;
+    top: 2px;
+    left: 68px;
+}
+
+.vol_pz {
+    position: absolute;
+    top: 2px;
+    left: 134px;
+}
+
+.pts_px {
+    position: absolute;
+    left: 200px;
+    top: 2px;
+}
+
+.pts_py {
+    position: absolute;
+    left: 266px;
+    top: 2px;
+}
+
+.pts_pz {
+    position: absolute;
+    left: 332px;
+    top: 2px;
+}
+
+.meta-row {
+    width: 100%
+}
+
+.meta-key {
+    float: left;
+}
+
+.meta-value {
+    float: right;
+}
+
+.description-container {
+    position: relative;
+    top: 70px;
+    left: 2px;
+    height: 443px;
+    width: 580px;
+    overflow: auto;
+}
+
+.metadata-table-title {
+    position: relative;
+    left: 232px;
+}
+
+.launch-pvweb-button-magvel {
+    cursor: pointer;
+    position: absolute;
+    top: 35px;
+    right: 15px;
+}
+
+.launch-pvweb-button-volren {
+    cursor: pointer;
+    position: absolute;
+    top: 7px;
+    right: 19px;
+}
+
+.metadata-table {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    border:1px solid black;
+}
+
+.metadata-table tr:nth-child(even) {
+    background: #CCC;
+    border:1px solid black;
+}
+
+.metadata-table tr:nth-child(odd) {
+    background: #FFF;
+    border:1px solid black;
+}
+
+.metadata-table td {
+    border:1px solid black;
+}
+
+.metadata-table th {
+    text-align:left;
+    border:1px solid black;
+}
+
+.full-size-image {
+    position: absolute;
+}
+
+.pvweb-iframe {
+    position: absolute;
+    background: white;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    border: 0;
+}
+
+.login-screen {
+    background: white;
+    position: absolute;
+    left: 200px;
+    top: 100px;
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 10px;
+    z-index: 1;
+}
+
+.ssh-authentication-widget {
+    background: white;
+    position: absolute;
+    left: 200px;
+    top: 100px;
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 10px;
+    z-index: 8;
+}
+
+.interact-panel-title {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 28px;
+}
+
+.interact-title-info {
+    float: left;
+}
+
+.close-interact-btn {
+    float: right;
+}
+
+.command-input-div {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 28px;
+    bottom: 177px;
+}
+
+.command-entry-field {
+    width: 693px;
+    height: 35px;
+    resize: none;
+}
+
+.command-input-hint, .command-output-hint {
+    color: #707070;
+}
+
+.command-output-div {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100px;
+    bottom: 0;
+}
+
+.command-results-field {
+    width: 693px;
+    height: 142px;
+    resize: none;
+}
+
+.job-status-indicator {
+    background: #113366;
+    position: absolute;
+    top: 3px;
+    bottom: 3px;
+    width: 150px;
+    right: 3px;
+    border-radius: 5px;
+    z-index: 11;
+}
+
+.job-status-busy-spinner {
+    position: absolute;
+    bottom: 6px;
+    left: 3px;
+    color: white;
+    display: none;
+}
+
+.job-status-ready-btn {
+    position: absolute;
+    bottom: 6px;
+    left: 3px;
+    color: #77cc55;
+    display: none;
+}
+
+.job-status-ready-btn.fresh:hover {
+    color: #00ff00;
+}
+
+.job-status-remove-btn {
+    position: absolute;
+    bottom: 7px;
+    left: 3px;
+    color: #aa3355;
+    display: none;
+}
+
+.job-status-remove-btn:hover {
+    color: #ff0000;
+}
+
+.job-status-label-id {
+    position: absolute;
+    top: 3px;
+    height: 20px;
+    right: 3px;
+    color: white;
+}
+
+.job-status-label-status {
+    position: absolute;
+    bottom: 1px;
+    height: 20px;
+    right: 3px;
+    color: white;
+}
+
+#job-status-indicator-template {
+    display: none;
+}

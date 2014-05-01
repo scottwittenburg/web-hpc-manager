@@ -1,0 +1,4 @@
+{
+"name": "Remote Connections Plugin",
+"description": "Allows Girder to make remote connections (via ssh protocol) to other machines on behalf of users."
+}

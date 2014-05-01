@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="font-awesome-4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css" type="text/css">
+  </head>
+
+  <body>
+    <div class="header-bar">
+      <!-- <h1 class="title-element">Cosmo Test</h1> -->
+      <button class="show-remotes-list-btn" type="button">Remotes</button>
+    </div>
+    <div class="viewport-container">
+      <div class="cosmology-data-pane">
+        <div class="cosmo-search-bar">
+          <div class="search-elt">Attr Name:</div>
+          <input type="text" class="attr-name-field search-elt">
+          <div class="search-elt">Attr Value:</div>
+          <input type="text" class="attr-value-field search-elt">
+          <button type="button" class="search-button search-elt">Filter</button>
+          <button type="button" class="clear-button search-elt">Clear</button>
+          <div class="search-results-text">
+            Showing results: <b> <span class="search-results-count"></span> </b>
+          </div>
+        </div>
+        <div class="cosmodata"></div>
+      </div>
+      <div class="cosmology-image-pane">
+        <img class="full-size-image"></img>
+      </div>
+      <div class="pvweb-iframe-pane">
+        <iframe class="pvweb-iframe"></iframe>
+      </div>
+    </div>
+
+    <div class="login-screen">
+      <input type="text" class="name-input-field" cols="20"></input>
+      <input type="password" class="password-input-field" cols="20"></input>
+      <button type="button" class="authenticate-button">Authenticate</button>
+    </div>
+
+    <div class="ssh-authentication-widget">
+      <div> Please enter your ssh credentials for <span class="remote-ssh-host">mayall</span> </div>
+      <input type="text" class="ssh-username-input-field" cols="20"></input>
+      <input type="password" class="ssh-password-input-field" cols="20"></input>
+      <button type="button" class="ssh-authenticate-button">SSH Authenticate</button>
+    </div>
+
+    <div class="remote-connection-container">
+      <h2 class="remote-connection-container-title">Secure Remote Connections</h2>
+      <div class="remote-connection-list">
+        <table class="cosmo-remote-connection-table">
+        </table>
+      </div>
+      <div class="remote-interact-panel">
+        <div class="interact-panel-title">
+          <div class="interact-title-info">
+            Interaction console: <b><span class="console-hostname"></span></b>
+          </div>
+          <button type="button" class="close-interact-btn">Close</button>
+        </div>
+        <div class="command-input-div">
+          <span class="command-input-hint">Enter command text and type the "Enter" key:</span>
+          <textarea class="command-entry-field" rows="5"></textarea>
+        </div>
+        <div class="command-output-div">
+          <span class="command-output-hint">Command output from remote:</span>
+          <textarea class="command-results-field" rows="8"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- -----------------------------------------------------------
+              Template for a Cosmology meta-data Girder item
+         ------------------------------------------------------- -->
+    <script type="text/template" class="cosmodata-template">
+      <div class="cosmo-element-container <%= originalFile %>">
+        <div class="thumb-container">
+          <img class="image-thumb vol_px" width="64" height="64" src="<%= imageUrls['vol_px'] %>"></img>
+          <img class="image-thumb pts_px" width="64" height="64" src="<%= imageUrls['pts_px'] %>"></img>
+          <img class="image-thumb vol_py" width="64" height="64" src="<%= imageUrls['vol_py'] %>"></img>
+          <img class="image-thumb pts_py" width="64" height="64" src="<%= imageUrls['pts_py'] %>"></img>
+          <img class="image-thumb vol_pz" width="64" height="64" src="<%= imageUrls['vol_pz'] %>"></img>
+          <img class="image-thumb pts_pz" width="64" height="64" src="<%= imageUrls['pts_pz'] %>"></img>
+        </div>
+        <div class="description-container">
+          <div>
+            <div class="item-title-container"> <span><b>Title:</b> <%= title %> </span> </div>
+            <div class="item-hostname-container"> <span><b>Host:</b> <%= hostname %> </span> </div>
+          </div>
+          <table class="launch-table">
+            <tr>
+              <td><span>Magnitude of Velocity (vtk):</span></td>
+              <td><button class="launch-pvweb-button-magvel" type="button">Launch pvweb</button></td>
+            </tr>
+            <tr>
+              <td><span>Volume Rendering (vtk):</span></td>
+              <td><button class="launch-pvweb-button-volren" type="button">Launch pvweb</button></td>
+            </tr>
+          </table>
+          <table class="metadata-table">
+            <tr><th> Attribute </th><th> Value </th></tr>
+            <tr><td>min_fof_halo_tag</td><td> <%= min_fof_halo_tag %> </td></tr>
+            <tr><td>max_fof_halo_tag</td><td> <%= max_fof_halo_tag %> </td></tr>
+            <tr><td>min_id</td><td> <%= min_id %> </td></tr>
+            <tr><td>max_id</td><td> <%= max_id %> </td></tr>
+            <tr><td>min_vel_mag</td><td> <%= min_vel_mag %> </td></tr>
+            <tr><td>max_vel_mag</td><td> <%= max_vel_mag %> </td></tr>
+            <tr><td>min_x</td><td> <%= min_x %> </td></tr>
+            <tr><td>max_x</td><td> <%= max_x %> </td></tr>
+            <tr><td>min_y</td><td> <%= min_y %> </td></tr>
+            <tr><td>max_y</td><td> <%= max_y %> </td></tr>
+            <tr><td>min_z</td><td> <%= min_z %> </td></tr>
+            <tr><td>max_z</td><td> <%= max_z %> </td></tr>
+            <tr><td>min_vx</td><td> <%= min_vx %> </td></tr>
+            <tr><td>max_vx</td><td> <%= max_vx %> </td></tr>
+            <tr><td>min_vy</td><td> <%= min_vy %> </td></tr>
+            <tr><td>max_vy</td><td> <%= max_vy %> </td></tr>
+            <tr><td>min_vz</td><td> <%= min_vz %> </td></tr>
+            <tr><td>max_vz</td><td> <%= max_vz %> </td></tr>
+          </table>
+        </div>
+      </div>
+    </script>
+
+    <!-- -----------------------------------------------------------
+              Template for a remote connection item
+         ------------------------------------------------------- -->
+    <script type="text/template" class="remote-connection-template">
+      <td> <%= hostname %> </td>
+      <td> <%= connected ? 'Connected' : 'Disconnected' %> </td>
+      <td> <button type="button"
+                   data-fqhn="<%= hostname %>"
+                   data-connection-id="<%= connectionId %>"
+                   data-item-id="<%= itemId %>"
+                   class="conn-interact-btn" <%= connected ? '' : 'disabled' %> >Interact</button>
+      </td>
+      <td> <button type="button"
+                   data-fqhn="<%= hostname %>"
+                   data-connection-id="<%= connectionId %>"
+                   data-item-id="<%= itemId %>"
+                   class="conn-connect-btn <%= connected ? 'disconnect' : 'connect' %>"> <%= connected ? 'Disconnect' : 'Connect' %> </button>
+      </td>
+    </script>
+
+    <div id="job-status-indicator-template" class="job-status-indicator">
+      <i class="fa fa-spinner fa-spin fa-2x job-status-busy-spinner"></i>
+      <i class="fa fa-share fa-2x job-status-ready-btn"></i>
+      <i class="fa fa-times fa-2x job-status-remove-btn"></i>
+      <span class="job-status-label-id"></span>
+      <span class="job-status-label-status"></span>
+    </div>
+
+    <script src="jquery-1.10.2.min.js"></script>
+    <script src="underscore-min.js"></script>
+    <script src="backbone-min.js"></script>
+    <script type="text/javascript" src="app.js"> </script>
+
+  </body>
+</html>
