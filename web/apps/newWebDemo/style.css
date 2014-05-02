@@ -480,6 +480,7 @@ tbody, tfoot, thead, tr, th, td {
     left: 3px;
     color: white;
     display: none;
+    font-size: 170%;
 }
 
 .job-status-ready-btn {
@@ -488,6 +489,7 @@ tbody, tfoot, thead, tr, th, td {
     left: 3px;
     color: #77cc55;
     display: none;
+    font-size: 170%;
 }
 
 .job-status-ready-btn.fresh:hover {
@@ -500,6 +502,7 @@ tbody, tfoot, thead, tr, th, td {
     left: 3px;
     color: #aa3355;
     display: none;
+    font-size: 170%;
 }
 
 .job-status-remove-btn:hover {
