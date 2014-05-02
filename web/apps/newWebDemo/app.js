@@ -4,8 +4,7 @@
     var baseUrl = 'http://solaris/girder/api/v1/',
     pvwebBaseUrl = 'http://solaris/apps/Visualizer/?',
     appConfig = { 'topLevelFolderId': '52f84a067bee040aa2335afc', // solaris
-                  // topLevelFolderId = '5356a4947bee047b8183d5b5', // tukey
-                  // topLevelFolderId = '52f908af7bee040bfaeee127', // mayall
+                  // 'topLevelFolderId': '5356a4947bee047b8183d5b5', // tukey
                   'doAddFileToJobString': false,
                   // 'applicationFragment': '/apps/Visualizer/',
                   'applicationFragment': '/webapps/pvwdynamic/',
@@ -375,6 +374,7 @@
             $('.pvweb-iframe').attr('src', '');
             $('.pvweb-iframe-pane').hide();
             $('.full-size-image').attr('src', e.target.src);
+            setViewingDetails($(e.target).attr('data-thumb-details'));
         },
 
         // Called to launch paraviewweb to visualize the magnitude of velocity points data
@@ -481,6 +481,15 @@
 
     // An instance of the top-level list view of CosmoData items
     myAppView = new AppView();
+
+
+    /*
+     * Update the details div indicating what the user is currently
+     * looking at in their visualization panel.
+     */
+    function setViewingDetails(message) {
+        $('.currently-viewing-information').text(message);
+    }
 
 
     /*
@@ -775,12 +784,14 @@
         // To start things off, load the overview.png image into the viewer
         overviewPngUrl = baseUrl + "file/52f8fe9d7bee040bfaeee126/download?token=" + token;
         $('.full-size-image').attr('src', overviewPngUrl);
+        setViewingDetails("Image: Overview");
 
         // As a convenience, if we click the header bar, reload the overview image
         $('.header-bar').click(function() {
             $('.pvweb-iframe').attr('src', '');
             $('.pvweb-iframe-pane').hide();
             $('.full-size-image').attr('src', overviewPngUrl);
+            setViewingDetails("Image: Overview");
         });
 
         // The search bar was hidden until login was complete, now show it
