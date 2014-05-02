@@ -41,6 +41,16 @@ tbody, tfoot, thead, tr, th, td {
     margin: 0 0 0 2px;
 }
 
+.currently-viewing-information {
+    margin: 0 auto;
+    position: relative;
+    width: 400px;
+    color: whitesmoke;
+    font-size: 120%;
+    top: 14px;
+    text-align: center;
+}
+
 .title-element {
     position: absolute;
     left: 43%;
@@ -466,11 +476,11 @@ tbody, tfoot, thead, tr, th, td {
 }
 
 .job-status-indicator {
-    background: #113366;
+    background: rgba(150, 150, 150, 1.0);
     position: absolute;
     top: 3px;
     bottom: 3px;
-    width: 150px;
+    width: 120px;
     right: 3px;
     border-radius: 5px;
     z-index: 11;
