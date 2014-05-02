@@ -22,7 +22,7 @@ tbody, tfoot, thead, tr, th, td {
 
 .header-bits {
     color: white;
-    margin: 10px;
+    margin: 11px;
     cursor: pointer;
 }
 
@@ -103,7 +103,7 @@ tbody, tfoot, thead, tr, th, td {
 
 .summary-thumb-container {
     position: absolute;
-    height: 68px;
+    height: 92px;
     width: 134px;
 }
 
@@ -137,7 +137,7 @@ tbody, tfoot, thead, tr, th, td {
 
 .run-summary-description-container {
     position: relative;
-    top: 21px;
+    top: 40px;
     left: 10px;
     right: 13px;
     height: 96px;
@@ -209,10 +209,10 @@ tbody, tfoot, thead, tr, th, td {
 
 .cosmo-element-title-bar {
     position: absolute;
-    width: 585px;
+    width: 399px;
     height: 30px;
     top: -30px;
-    background-color: rgba(150, 150, 150, 0.9);
+    background-color: rgba(150, 150, 150, 1.0);
     border-radius: 3px 3px 0 0;
 }
 
@@ -230,12 +230,12 @@ tbody, tfoot, thead, tr, th, td {
     border: 1px solid;
     border-radius: 1px;
     height: 515px;
-    width: 585px;
+    width: 398px;
     margin-bottom: 4px;
     position: fixed;
     top: 100px;
     left: 100px;
-    background-color: rgba(220, 220, 220, 0.8);
+    background-color: rgba(220, 220, 220, 1.0);
 }
 
 .cosmo-element-title-text {
@@ -261,7 +261,7 @@ tbody, tfoot, thead, tr, th, td {
 .thumb-container {
     position: absolute;
     height: 68px;
-    width: 585px;
+    width: 399px;
 }
 
 .vol_px_sum {
@@ -329,27 +329,29 @@ tbody, tfoot, thead, tr, th, td {
     top: 70px;
     left: 2px;
     height: 443px;
-    width: 580px;
+    width: 395px;
     overflow: auto;
 }
 
 .metadata-table-title {
     position: relative;
-    left: 232px;
+    left: 140px;
 }
 
 .launch-pvweb-button-magvel {
     cursor: pointer;
     position: absolute;
-    top: 35px;
-    right: 15px;
+    bottom: 2px;
+    right: 2px;
+    width: 64px;
 }
 
 .launch-pvweb-button-volren {
     cursor: pointer;
     position: absolute;
-    top: 7px;
-    right: 19px;
+    bottom: 2px;
+    left: 2px;
+    width: 64px;
 }
 
 .metadata-table {

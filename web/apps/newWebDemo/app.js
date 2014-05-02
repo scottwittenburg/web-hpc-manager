@@ -318,7 +318,9 @@
 
         events: {
             'click .image-thumb': 'loadImage',
-            'click .show-metadata-btn': 'showMetadata'
+            'click .show-metadata-btn': 'showMetadata',
+            'click .launch-pvweb-button-magvel': 'launchPtsViz',
+            'click .launch-pvweb-button-volren': 'launchVolViz'
         },
 
         // Re-render the titles of the todo item.
@@ -344,32 +346,28 @@
 
             var lx, ly;
 
+            function dragWindow(evt) {
+                var dx = evt.pageX - lx;
+                var dy = evt.pageY -ly;
+                jqElt.css('top', '+=' + dy);
+                jqElt.css('left', '+=' + dx);
+                lx = evt.pageX;
+                ly = evt.pageY;
+            }
+
             $('.cosmo-element-title-bar', jqElt).bind('mousedown', function(evt) {
                 $('.cosmo-element-container').css('z-index', '10');
                 jqElt.css('z-index', '11');
                 lx = evt.pageX;
                 ly = evt.pageY;
-                $(this).bind('mousemove', function(evt) {
-                    var dx = evt.pageX - lx;
-                    var dy = evt.pageY -ly;
-                    jqElt.css('top', '+=' + dy);
-                    jqElt.css('left', '+=' + dx);
-                    lx = evt.pageX;
-                    ly = evt.pageY;
-                });
+                $(window).bind('mousemove', dragWindow);
             });
 
             $('.cosmo-element-title-bar', jqElt).bind('mouseup', function(evt) {
-                $('.cosmo-element-title-bar', jqElt).unbind('mousemove');
+                $(window).unbind('mousemove', dragWindow);
             });
 
             $('.image-thumb', jqElt).click(function(evt) { that.loadImage(evt); });
-            $('.launch-pvweb-button-magvel', jqElt).click(function(evt) {
-                that.launchVolViz(evt);
-            });
-            $('.launch-pvweb-button-volren', jqElt).click(function(evt) {
-                that.launchPtsViz(evt);
-            });
         },
 
         // Called to load the full size image in the viewer when thumb is clicked
