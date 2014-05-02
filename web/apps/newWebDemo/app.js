@@ -802,9 +802,9 @@
             }, 500, function() { /* Animation complete */ });
             if (selected) {
                 updateRemoteConnections();
-                $('.fa-chevron-right').removeClass("fa-chevron-right").addClass("fa-chevron-left");
+                $('.vtk-icon-right-open').removeClass("vtk-icon-right-open").addClass("vtk-icon-left-open");
             } else {
-                $('.fa-chevron-left').removeClass("fa-chevron-left").addClass("fa-chevron-right");
+                $('.vtk-icon-left-open').removeClass("vtk-icon-left-open").addClass("vtk-icon-right-open");
             }
         });
 
