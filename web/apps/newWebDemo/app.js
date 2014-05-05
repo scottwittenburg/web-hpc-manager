@@ -5,11 +5,14 @@
     pvwebBaseUrl = 'http://solaris/apps/Visualizer/?',
     appConfig = { 'topLevelFolderId': '52f84a067bee040aa2335afc', // solaris
                   // 'topLevelFolderId': '5356a4947bee047b8183d5b5', // tukey
-                  'doAddFileToJobString': false,
-                  // 'applicationFragment': '/apps/Visualizer/',
-                  'applicationFragment': '/webapps/pvwdynamic/',
-                  'hostnameFragment': ''
-                  // 'hostnameFragment': '.alcf.anl.gov'
+                  'doAddFileToJobString': true,
+                  'applicationFragment': '/apps/Visualizer/',
+                  // 'applicationFragment': '/webapps/pvwdynamic/',
+                  'hostnameFragment': '',
+                  // 'hostnameFragment': '.alcf.anl.gov',
+                  // 'jobString': "#!/bin/sh%0A%0Aexport PATH=/home/scottwit/software/python-2.7.3/bin:\\$PATH ; export LD_LIBRARY_PATH=/home/scottwit/software/python-2.7.3/lib:\\$LD_LIBRARY_PATH ; /home/scottwit/ParaView/release-4.1.0/build/bin/pvpython /home/scottwit/ParaView/release-4.1.0/build/lib/site-packages/paraview/web/pv_web_visualizer.py --port 8000 --content /home/scottwit/ParaView/release-4.1.0/build/www --data-dir /gpfs/mira-fs0/projects/SkySurvey/scottwit/pvLaunchDemo/haloregions -f"
+                  // 'jobString': "#!/bin/bash%0A%0A/home/scott/projects/ParaView/build-make-gpu/bin/pvpython /home/scott/projects/ParaView/src/Web/Python/pv_web_wavelet.py -f --data-dir /home/scott/Documents/cosmodata/haloregions --port 8000 --pipeline WaveletPipeline --content /home/scott/projects/ParaView/build-make-gpu/www --host localhost"
+                  'jobString': "#!/bin/bash%0A%0A/home/scott/projects/ParaView/build-make-gpu/bin/pvpython /home/scott/projects/ParaView/build-make-gpu/lib/site-packages/paraview/web/pv_web_visualizer.py --content /home/scott/projects/ParaView/build-make-gpu/www -f --data-dir /home/scott/Documents/cosmodata/haloregions --port 8000"
                 },
     remoteConnectionsFolder = '52fe97757bee040fc657a371',
     // mySessionMgrUrlKeyVal = 'sessionManagerURL=http://solaris/girder/api/v1/remoteconnection&',
@@ -26,9 +29,6 @@
                       "numberOfNodes": "1",
                       "queue": "pubnet",
                       "project": "SkySurvey" },
-    // jobString = "#!/bin/sh%0A%0Aexport PATH=/home/scottwit/software/python-2.7.3/bin:\\$PATH ; export LD_LIBRARY_PATH=/home/scottwit/software/python-2.7.3/lib:\\$LD_LIBRARY_PATH ; /home/scottwit/ParaView/release-4.1.0/build/bin/pvpython /home/scottwit/ParaView/release-4.1.0/build/lib/site-packages/paraview/web/pv_web_visualizer.py --port 8000 --content /home/scottwit/ParaView/release-4.1.0/build/www --data-dir /gpfs/mira-fs0/projects/SkySurvey/scottwit/pvLaunchDemo/haloregions -f",
-    jobString = "#!/bin/bash%0A%0A/home/scott/projects/ParaView/build-make-gpu/bin/pvpython /home/scott/projects/ParaView/src/Web/Python/pv_web_wavelet.py -f --data-dir /home/scott/Documents/cosmodata/haloregions --port 8000 --pipeline WaveletPipeline --content /home/scott/projects/ParaView/build-make-gpu/www --host localhost",
-    // jobString = "#!/bin/bash%0A%0A/home/scott/projects/ParaView/build-make-gpu/bin/pvpython /home/scott/projects/ParaView/build-make-gpu/lib/site-packages/paraview/web/pv_web_visualizer.py --content /home/scott/projects/ParaView/build-make-gpu/www -f --data-dir /home/scott/Documents/cosmodata/haloregions --port 8000",
 
     // Does the work of figuring out the argument to send to visualizer
     launchPvwebFile = function(filepath, hostname) {
@@ -125,6 +125,7 @@
                         $('.pvweb-iframe-pane').show();
                         event.stopPropagation();
                         event.preventDefault();
+                        setViewingDetails('Viewing remote visualization');
                     });
                 }
                 nextCheck = 5000;
@@ -254,6 +255,7 @@
                 filepath = '';
             }
             console.log("Launching a pvweb job to visualize: " + filepath);
+            var jobString = appConfig['jobString'];
             var launchData = { 'connId': connId,
                                'girderDir': '/home/scottwit/.girder',
                                'userHomeDir': '/home/scottwit',
