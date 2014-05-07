@@ -360,12 +360,12 @@ tbody, tfoot, thead, tr, th, td {
     left: 2px;
     height: 443px;
     width: 395px;
-    overflow: auto;
+    /* overflow: auto; */
 }
 
 .metadata-table-title {
     position: relative;
-    left: 140px;
+    left: 127px;
 }
 
 .launch-pvweb-button-halos {
@@ -390,32 +390,6 @@ tbody, tfoot, thead, tr, th, td {
     bottom: 2px;
     left: 2px;
     width: 64px;
-}
-
-.metadata-table {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    border:1px solid black;
-}
-
-.metadata-table tr:nth-child(even) {
-    background: #CCC;
-    border:1px solid black;
-}
-
-.metadata-table tr:nth-child(odd) {
-    background: #FFF;
-    border:1px solid black;
-}
-
-.metadata-table td {
-    border:1px solid black;
-}
-
-.metadata-table th {
-    text-align:left;
-    border:1px solid black;
 }
 
 .pvweb-iframe {
@@ -566,4 +540,72 @@ tbody, tfoot, thead, tr, th, td {
 
 .hidden-closer-div {
     display: none;
+}
+
+.files-contents-container {
+    position: absolute;
+    top: 21px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border: 1px solid;
+}
+
+.files-contents-button-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background-color: #cccccc;
+}
+
+.file-contents-btn-label {
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+    color: #ffffff;
+    top: 10px;
+}
+
+.files-contents-header-btn {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 131px;
+    cursor: pointer;
+}
+
+.files-contents-header-btn-selected {
+    background-color: #aaaaaa;
+}
+
+.files-contents-show-indat-btn {
+    left: 0;
+}
+
+.files-contents-show-config-btn {
+    left: 131px;
+}
+
+.files-contents-show-analysis-btn {
+    left: 262px;
+}
+
+.files-contents-text {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.files-contents-text-textarea {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    background-color: #eeeeee;
 }

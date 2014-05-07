@@ -24,8 +24,6 @@
             <img class="full-size-image"></img>
           </div>
         </div>
-        <div class="pvweb-iframe-pane"></div>
-        <div class="hidden-closer-div close"></div>
       </div>
     </div>
 
@@ -122,11 +120,27 @@
         </div>
         <div class="description-container">
           <div class="metadata-table-title-container">
-            <span class="metadata-table-title"><b>Metadata for Run</b></span>
+            <span class="metadata-table-title"><b>Run Configuration</b></span>
           </div>
-          <table class="metadata-table">
-            <tr><th> Attribute </th><th> Value </th></tr>
-          </table>
+          <div class="files-contents-container">
+            <div class="files-contents-button-container">
+              <div class="files-contents-show-indat-btn files-contents-header-btn"
+                   data-filename="indat.params">
+                <div class="file-contents-btn-label">indat</div>
+              </div>
+              <div class="files-contents-show-config-btn files-contents-header-btn"
+                   data-filename="cosmotools-config.dat">
+                <div class="file-contents-btn-label">config</div>
+              </div>
+              <div class="files-contents-show-analysis-btn files-contents-header-btn"
+                   data-filename="analysisdat">
+                <div class="file-contents-btn-label">analysis</div>
+              </div>
+            </div>
+            <div class="files-contents-text">
+              <textarea class="files-contents-text-textarea" readonly></textarea>
+            </div>
+          </div>
         </div>
       </div>
     </script>

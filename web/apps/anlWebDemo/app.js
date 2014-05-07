@@ -3,7 +3,7 @@
 (function ($) {
     var baseUrl = 'http://solaris/girder/api/v1/',
     pvwebBaseUrl = 'http://solaris/apps/Visualizer/?',
-    appConfig = { 'topLevelFolderId': '5368188c7bee043b2d028f8c', // solaris
+    appConfig = { 'topLevelFolderId': '536a8b8c7bee041bb18b9ac3', // solaris
                   // 'topLevelFolderId': '5356a4947bee047b8183d5b5', // tukey
                   'doAddFileToJobString': false,
                   // 'applicationFragment': '/apps/Visualizer/',
@@ -127,6 +127,9 @@
                                 'randomKey': 'randomVal'
                             }
                         };
+                        $('.cosmology-image-pane').hide();
+                        var pvwebdiv = $('<div class="pvweb-iframe-pane"></div>')
+                        $('.visualization-pane').append(pvwebdiv);
                         $('.pvweb-iframe-pane').vtkCatalystPVWebDirect(info);
                         $('.pvweb-iframe-pane').show();
                         event.stopPropagation();
@@ -376,6 +379,14 @@
             });
 
             $('.image-thumb', jqElt).click(function(evt) { that.loadImage(evt); });
+
+            $('.files-contents-header-btn', jqElt).unbind().click(function() {
+                console.log("Clicked on a header button");
+                var me = $(this);
+                $('.files-contents-header-btn', jqElt).removeClass("files-contents-header-btn-selected");
+                me.addClass("files-contents-header-btn-selected");
+                $('.files-contents-text-textarea').text(that.model.attributes['configFiles'][me.attr('data-filename')]);
+            });
         },
 
         // Called to load the full size image in the viewer when thumb is clicked
@@ -749,10 +760,15 @@
      */
     function closePvWebConnection() {
         try {
-            $('.hidden-closer-div').trigger('click');
+            var container = $('.pvweb-iframe-pane');
+            if (container.length > 0) {
+                console.log("OK, I WILL TRY TO CLOSE PVWEB CONNECTION");
+                container.trigger('stop-vtk-connection');
+                container.remove();
+            }
         } catch (err) {
-            //console.log('Got an error trying to close pvweb conn, probably already closed');
-            //console.log(err);
+            console.log('Got an error trying to close pvweb conn, probably already closed');
+            console.log(err);
         }
     }
 
@@ -767,7 +783,9 @@
 
         // This function iterates over the files associated with an item
         // and constructs a url to retrieve each file.  We assume all of
-        // the files that match the regular expression are png images.
+        // the files that match the regular expression are png images or
+        // else one of the specific configuration files in which we're
+        // interested.
         function handleItemFiles(fileArray) {
             var itemId = null;
             for (var idx in fileArray) {
@@ -782,6 +800,23 @@
                     if ('imageUrls' in cosmoDatum[itemId]['attributes']) {
                         cosmoDatum[itemId]['attributes']['imageUrls'][keystr] = url;
                     }
+                } else if (filename === 'cosmotools-config.dat' ||
+                           filename === 'indat.params' ||
+                           filename === 'analysisdat') {
+                    (function (fname, fid) {
+                        // Issue asynchronous request for the actual file contents
+                        $.ajax({
+                            type: 'GET',
+                            url: baseUrl + 'file/' + fid + '/download/' + fname,
+                            success: function(result) {
+                                cosmoDatum[itemId]['attributes']['configFiles'][fname] = result;
+                            },
+                            error: function(result) {
+                                console.log("ERROR getting file contents item");
+                                console.log(result);
+                            }
+                        });
+                    })(filename, fileId);
                 }
             }
             if (itemId !== null) {
@@ -906,6 +941,9 @@
             magnitudeDensityFile: item['magden'],
             pointDensityFile: item['ptsden'],
             halosFile: item['halos'],
+            configFiles: { 'indat.params': '',
+                           'cosmotools-config.dat': '',
+                           'analysisdat': '' },
             imageUrls: { 'MagnitudeDensity_px': '',
                          'PointDensity_px': '',
                          'halos-spheres_px': '',
@@ -955,23 +993,33 @@
      * the top or left.
      */
     function moveImageIntoPosition() {
-        var container = $('.cosmology-image-pane');
-        var containerWidth = container.width();
-        var containerHeight = container.height();
-        var imageElt = $('.full-size-image');
-        var imageWidth = imageElt.width();
-        var imageHeight = imageElt.height();
-        var borderedImageContainer = $('.image-bordered-description');
-        var bicHeight = imageHeight + 25;
-        borderedImageContainer.css('width', imageWidth);
-        borderedImageContainer.css('height', bicHeight);
+        // First, check if we need to re-render the pvweb viewport
+        var pvwebDiv = $('.pvweb-iframe-pane');
+        if (pvwebDiv.length > 0) {
+            var viewport = $('.pvweb-iframe-pane').data('viewport');
+            if (viewport) {
+                viewport.render();
+            }
+        } else {
+            var container = $('.cosmology-image-pane');
+            container.show();
+            var containerWidth = container.width();
+            var containerHeight = container.height();
+            var imageElt = $('.full-size-image');
+            var imageWidth = imageElt.width();
+            var imageHeight = imageElt.height();
+            var borderedImageContainer = $('.image-bordered-description');
+            var bicHeight = imageHeight + 25;
+            borderedImageContainer.css('width', imageWidth);
+            borderedImageContainer.css('height', bicHeight);
 
-        if (containerWidth > imageWidth) {
-            borderedImageContainer.css('left', ((containerWidth - imageWidth) / 2.0));
-        }
+            if (containerWidth > imageWidth) {
+                borderedImageContainer.css('left', ((containerWidth - imageWidth) / 2.0));
+            }
 
-        if (containerHeight > bicHeight) {
-            borderedImageContainer.css('top', ((containerHeight - bicHeight) / 2.0));
+            if (containerHeight > bicHeight) {
+                borderedImageContainer.css('top', ((containerHeight - bicHeight) / 2.0));
+            }
         }
     }
 
