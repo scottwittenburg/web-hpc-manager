@@ -31,55 +31,6 @@
                       "queue": "pubnet",
                       "project": "SkySurvey" },
 
-    // Does the work of figuring out the argument to send to visualizer
-    launchPvwebFile = function(filepath, hostname) {
-        var match = filePathPattern.exec(filepath);
-        if (match !== null) {
-            getSshCredentials(hostname, function(name, pass) {
-                var url = pvwebBaseUrl + mySessionMgrUrlKeyVal +
-                    'sshuser=' + name + '&sshpass=' + pass +
-                    '&relFileName=' + match[1];
-                console.log('pvweb points launch url: ' + url);
-                $('.pvweb-iframe-pane').show();
-            });
-        }
-    },
-
-    // Use the appropriate RemoteConnection to launch a pvweb instance,
-    // create a secure tunnel, then connect to the pvweb instance through
-    // the tunnel
-    securePvwebLaunch = function(filepath, host) {
-        console.log("Attempting a secure remote launch on host: " + host);
-
-        var match = filePathPattern.exec(filepath);
-        var relFilePath = '';
-        if (match !== null) {
-            relFilePath = match[1];
-        }
-
-        var d = findRemoteConnectionDetails(host);
-
-        function launch(connId) {
-            var url = pvwebBaseUrl +
-                'sessionManagerURL=http://solaris/girder/api/v1/remoteconnection/tunnellaunch&' +
-                'relFileName=' + relFilePath + '&' +
-                'connectionId=' + connId + '&' +
-                'remoteHost=' + host;
-
-            console.log('pvweb launch url: ' + url);
-
-            $('.pvweb-iframe-pane').show();
-        }
-
-        if (d['targetConnId'] === 'none' || d['targetConnId'] === '' || d['targetConnected'] === false) {
-            console.log("you are not connected, attempting to connect using following params:");
-            console.log('host: ' + d['targetFqhn'] + ', connId: ' + d['targetConnId'] + ', itemId: ' + d['targetItemId']);
-            connectToRemote(d['targetFqhn'], d['targetConnId'], d['targetItemId'], launch);
-        } else {
-            launch(d['targetConnId']);
-        }
-    },
-
     // Similar to securePvwebLaunch, except in this case we have to qsub our paraviewweb
     // job and then qstat until it's ready and running.
     scheduledPvwebLaunch = function(filepath, host) {
@@ -297,10 +248,6 @@
         }
     },
 
-    /// This is where I can choose from the various forms of launching
-    /// with which I have experimented in this prototype application
-    //launchFunction = launchPvwebFile,
-    //launchFunction = securePvwebLaunch,
     launchFunction = scheduledPvwebLaunch,
 
     // Update the number of items showing in the results column
@@ -364,6 +311,7 @@
                 jqElt.css('left', '+=' + dx);
                 lx = evt.pageX;
                 ly = evt.pageY;
+                evt.preventDefault();
             }
 
             $('.cosmo-element-title-bar', jqElt).bind('mousedown', function(evt) {
@@ -385,7 +333,8 @@
                 var me = $(this);
                 $('.files-contents-header-btn', jqElt).removeClass("files-contents-header-btn-selected");
                 me.addClass("files-contents-header-btn-selected");
-                $('.files-contents-text-textarea').text(that.model.attributes['configFiles'][me.attr('data-filename')]);
+                var fileContents = that.model.attributes['configFiles'][me.attr('data-filename')];
+                $('.files-contents-text-textarea', jqElt).text(fileContents);
             });
         },
 
@@ -932,15 +881,26 @@
      */
     function convertItemToCosmoData(dataItem) {
         var item = dataItem['meta']
+        var indatParams = JSON.parse(item['indat_params']);
+        /* RL, NP, NG, N_STEPS, USE_WHITE_NOISE_INIT, Z_IN, Z_FIN */
         return new CosmoData({
-            title: dataItem['description'],
+            title: item['title'],
             itemId: dataItem['_id'],
             description: dataItem['description'],
             createdDate: dataItem['created'],
             hostname: item['hostname'],
+            codeName: item['codeName'],
+            codeGitRevision: item['codeGitRevision'],
             magnitudeDensityFile: item['magden'],
             pointDensityFile: item['ptsden'],
             halosFile: item['halos'],
+            rl: indatParams['RL'],
+            np: indatParams['NP'],
+            ng: indatParams['NG'],
+            nSteps: indatParams['N_STEPS'],
+            whiteNoiseInit: indatParams['USE_WHITE_NOISE_INIT'],
+            zIn: indatParams['Z_IN'],
+            zFin: indatParams['Z_FIN'],
             configFiles: { 'indat.params': '',
                            'cosmotools-config.dat': '',
                            'analysisdat': '' },

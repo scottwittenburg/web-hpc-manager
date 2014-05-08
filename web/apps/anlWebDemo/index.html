@@ -70,7 +70,7 @@
     <script type="text/template" class="cosmo-summary-template">
       <div class="cosmo-summary-element-container <%= title %>">
         <div class="summary-title-bar">
-          <span class="summary-title-bar-contents"><%= title %></span>
+          <span class="summary-title-bar-contents">Summary for <%= title %></span>
           <div class="vtk-icon-info-1 show-metadata-btn"></div>
         </div>
         <div class="summary-contents-container">
@@ -83,20 +83,38 @@
             <button class="launch-pvweb-button-halos" type="button">Launch</button>
           </div>
           <div class="summary-description-container">
-            <div class="item-summary-title-container">
-              <span><b>Run Title:</b> <%= title %> </span>
-            </div>
             <div class="item-summary-hostname-container">
               <span><b>Source host:</b> <%= hostname %> </span>
             </div>
             <div class="item-summary-created-date-container">
               <span><b>Run date:</b> <%= createdDate %> </span>
             </div>
+            <div class="item-summary-code-name-container">
+              <span><b>Code name:</b> <%= codeName %> </span>
+            </div>
+            <div class="item-summary-code-revision-container">
+              <span><b>Code revision:</b></span>
+              <span class="item-summary-code-revision"> <%= codeGitRevision.substring(31) %></span>
+            </div>
           </div>
           <div class="run-summary-description-container">
-            <div class="run-summary-description">
-              <span><b>Description:</b> <%= description %> </span>
+            <div class="run-summary-parameters-table-title">
+              <span><b>Parameters</b></span>
             </div>
+            <table class="run-summary-parameters-table">
+              <tr>
+                <td><span><b>rL:</b> <%= rl %> </span></td>
+                <td><span><b>NSTEPS:</b> <%= nSteps %> </span></td>
+              </tr>
+              <tr>
+                <td><span><b>Whitenoise init:</b> <%= whiteNoiseInit %> </span></td>
+                <td><span><b>initial/final redshift:</b> Unavailable </span></td>
+              </tr>
+              <tr>
+                <td><span><b>NP/NG:</b> <%= np %>/<%= ng %> </span></td>
+                <td><span><b>Z_IN/Z_FIN:</b> <%= zIn %>/<%= zFin %> </td>
+              </tr>
+            </table>
           </div>
         </div>
     </script>
@@ -126,15 +144,15 @@
             <div class="files-contents-button-container">
               <div class="files-contents-show-indat-btn files-contents-header-btn"
                    data-filename="indat.params">
-                <div class="file-contents-btn-label">indat</div>
+                <div class="file-contents-btn-label">indat.params</div>
               </div>
               <div class="files-contents-show-config-btn files-contents-header-btn"
                    data-filename="cosmotools-config.dat">
-                <div class="file-contents-btn-label">config</div>
+                <div class="file-contents-btn-long-label">cosmotools-config.dat</div>
               </div>
               <div class="files-contents-show-analysis-btn files-contents-header-btn"
                    data-filename="analysisdat">
-                <div class="file-contents-btn-label">analysis</div>
+                <div class="file-contents-btn-label">analysisdat</div>
               </div>
             </div>
             <div class="files-contents-text">
