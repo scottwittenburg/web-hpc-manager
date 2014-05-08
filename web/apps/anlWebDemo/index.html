@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+
+  <body>
+    <div class="header-bar">
+      <div class="show-runs-btn header-btn">
+        <div class="vtk-icon-menu-1 header-bits"><span class="header-btn-label">Runs</span></div>
+      </div>
+      <div class="show-remotes-list-btn header-btn">
+        <div class="vtk-icon-right-open header-bits"><span class="header-btn-label">Remotes</span></div>
+      </div>
+    </div>
+    <div class="viewport-container">
+      <div class="cosmology-data-pane">
+        <div class="cosmodata"></div>
+      </div>
+      <div class="visualization-pane">
+        <div class="cosmology-image-pane">
+          <div class="image-bordered-description">
+            <div class="currently-viewing-information"></div>
+            <img class="full-size-image"></img>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="login-screen">
+      <input type="text" class="name-input-field" cols="20"></input>
+      <input type="password" class="password-input-field" cols="20"></input>
+      <button type="button" class="authenticate-button">Authenticate</button>
+    </div>
+
+    <div class="ssh-authentication-widget">
+      <div> Please enter your ssh credentials for <span class="remote-ssh-host">mayall</span> </div>
+      <input type="text" class="ssh-username-input-field" cols="20"></input>
+      <input type="password" class="ssh-password-input-field" cols="20"></input>
+      <button type="button" class="ssh-authenticate-button">SSH Authenticate</button>
+    </div>
+
+    <div class="remote-connection-container">
+      <h2 class="remote-connection-container-title">Secure Remote Connections</h2>
+      <div class="remote-connection-list">
+        <table class="cosmo-remote-connection-table">
+        </table>
+      </div>
+      <div class="remote-interact-panel">
+        <div class="interact-panel-title">
+          <div class="interact-title-info">
+            Interaction console: <b><span class="console-hostname"></span></b>
+          </div>
+          <button type="button" class="close-interact-btn">Close</button>
+        </div>
+        <div class="command-input-div">
+          <span class="command-input-hint">Enter command text and type the "Enter" key:</span>
+          <textarea class="command-entry-field" rows="5"></textarea>
+        </div>
+        <div class="command-output-div">
+          <span class="command-output-hint">Command output from remote:</span>
+          <textarea class="command-results-field" rows="8"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- -----------------------------------------------------------
+              Template for a Cosmology summary item
+         ------------------------------------------------------- -->
+    <script type="text/template" class="cosmo-summary-template">
+      <div class="cosmo-summary-element-container <%= title %>">
+        <div class="summary-title-bar">
+          <span class="summary-title-bar-contents">Summary for <%= title %></span>
+          <div class="vtk-icon-info-1 show-metadata-btn"></div>
+        </div>
+        <div class="summary-contents-container">
+          <div class="summary-thumb-container">
+            <img class="image-thumb ptsden_px_sum" data-thumb-details="<%= title %> -Point Density - x+" width="64" height="64" src="<%= imageUrls['PointDensity_px'] %>"></img>
+            <img class="image-thumb magden_px_sum" data-thumb-details="<%= title %> - Magnitude Density - x+" width="64" height="64" src="<%= imageUrls['MagnitudeDensity_px'] %>"></img>
+            <img class="image-thumb halos_px_sum" data-thumb-details="<%= title %> - Halos - x+" width="64" height="64" src="<%= imageUrls['halos-spheres_px'] %>"></img>
+            <button class="launch-pvweb-button-ptsvolren" type="button">Launch</button>
+            <button class="launch-pvweb-button-magvolren" type="button">Launch</button>
+            <button class="launch-pvweb-button-halos" type="button">Launch</button>
+          </div>
+          <div class="summary-description-container">
+            <div class="item-summary-hostname-container">
+              <span><b>Source host:</b> <%= hostname %> </span>
+            </div>
+            <div class="item-summary-created-date-container">
+              <span><b>Run date:</b> <%= createdDate %> </span>
+            </div>
+            <div class="item-summary-code-name-container">
+              <span><b>Code name:</b> <%= codeName %> </span>
+            </div>
+            <div class="item-summary-code-revision-container">
+              <span><b>Code revision:</b></span>
+              <span class="item-summary-code-revision"> <%= codeGitRevision.substring(31) %></span>
+            </div>
+          </div>
+          <div class="run-summary-description-container">
+            <div class="run-summary-parameters-table-title">
+              <span><b>Parameters</b></span>
+            </div>
+            <table class="run-summary-parameters-table">
+              <tr>
+                <td><span><b>rL:</b> <%= rl %> </span></td>
+                <td><span><b>NSTEPS:</b> <%= nSteps %> </span></td>
+              </tr>
+              <tr>
+                <td><span><b>Whitenoise init:</b> <%= whiteNoiseInit %> </span></td>
+                <td><span><b>initial/final redshift:</b> Unavailable </span></td>
+              </tr>
+              <tr>
+                <td><span><b>NP/NG:</b> <%= np %>/<%= ng %> </span></td>
+                <td><span><b>Z_IN/Z_FIN:</b> <%= zIn %>/<%= zFin %> </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+    </script>
+
+    <!-- -----------------------------------------------------------
+              Template for a Cosmology meta-data Girder item
+         ------------------------------------------------------- -->
+    <script type="text/template" class="cosmodata-template">
+      <div class="cosmo-element-container <%= title %> <%= hostname %>">
+        <div class="cosmo-element-title-bar">
+          <span class="cosmo-element-title-text">Info for <%= title %> (<%= hostname %>)</span>
+          <div class="vtk-icon-cancel close-cosmo-element-btn"></div>
+        </div>
+        <div class="thumb-container">
+          <img class="image-thumb vol_px" data-thumb-details="<%= title %> - volume - x+ (<%= hostname %>)" width="64" height="64" src="<%= imageUrls['MagnitudeDensity_px'] %>"></img>
+          <img class="image-thumb pts_px" data-thumb-details="<%= title %> - points - x+ (<%= hostname %>)" width="64" height="64" src="<%= imageUrls['halos-spheres_px'] %>"></img>
+          <img class="image-thumb vol_py" data-thumb-details="<%= title %> - volume - y+ (<%= hostname %>)" width="64" height="64" src="<%= imageUrls['MagnitudeDensity_py'] %>"></img>
+          <img class="image-thumb pts_py" data-thumb-details="<%= title %> - points - y+ (<%= hostname %>)" width="64" height="64" src="<%= imageUrls['halos-spheres_py'] %>"></img>
+          <img class="image-thumb vol_pz" data-thumb-details="<%= title %> - volume - z+ (<%= hostname %>)" width="64" height="64" src="<%= imageUrls['MagnitudeDensity_pz'] %>"></img>
+          <img class="image-thumb pts_pz" data-thumb-details="<%= title %> - points - z+ (<%= hostname %>)" width="64" height="64" src="<%= imageUrls['halos-spheres_pz'] %>"></img>
+        </div>
+        <div class="description-container">
+          <div class="metadata-table-title-container">
+            <span class="metadata-table-title"><b>Run Configuration</b></span>
+          </div>
+          <div class="files-contents-container">
+            <div class="files-contents-button-container">
+              <div class="files-contents-show-indat-btn files-contents-header-btn"
+                   data-filename="indat.params">
+                <div class="file-contents-btn-label">indat.params</div>
+              </div>
+              <div class="files-contents-show-config-btn files-contents-header-btn"
+                   data-filename="cosmotools-config.dat">
+                <div class="file-contents-btn-long-label">cosmotools-config.dat</div>
+              </div>
+              <div class="files-contents-show-analysis-btn files-contents-header-btn"
+                   data-filename="analysisdat">
+                <div class="file-contents-btn-label">analysisdat</div>
+              </div>
+            </div>
+            <div class="files-contents-text">
+              <textarea class="files-contents-text-textarea" readonly></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </script>
+
+    <!-- -----------------------------------------------------------
+              Template for a remote connection item
+         ------------------------------------------------------- -->
+    <script type="text/template" class="remote-connection-template">
+      <td> <%= hostname %> </td>
+      <td> <%= connected ? 'Connected' : 'Disconnected' %> </td>
+      <td> <button type="button"
+                   data-fqhn="<%= hostname %>"
+                   data-connection-id="<%= connectionId %>"
+                   data-item-id="<%= itemId %>"
+                   class="conn-interact-btn" <%= connected ? '' : 'disabled' %> >Interact</button>
+      </td>
+      <td> <button type="button"
+                   data-fqhn="<%= hostname %>"
+                   data-connection-id="<%= connectionId %>"
+                   data-item-id="<%= itemId %>"
+                   class="conn-connect-btn <%= connected ? 'disconnect' : 'connect' %>"> <%= connected ? 'Disconnect' : 'Connect' %> </button>
+      </td>
+    </script>
+
+    <div id="job-status-indicator-template" class="job-status-indicator">
+      <i class="vtk-icon-spin4 animate-spin job-status-busy-spinner"></i>
+      <i class="vtk-icon-forward job-status-ready-btn"></i>
+      <i class="vtk-icon-cancel job-status-remove-btn"></i>
+      <span class="job-status-label-id"></span>
+      <span class="job-status-label-status"></span>
+    </div>
+
+    <!-- This is a ParaViewWeb dependency, and loads everything needed -->
+    <script type="text/javascript" src="/lib/core/vtkweb-loader.js"
+            load="core, fontello, d3, rickshaw, widgets"
+            extra="../../ext/js/underscore-min.js, ../../ext/js/backbone-min.js, style.css, app.js">
+    </script>
+  </body>
+</html>

@@ -1,0 +1,637 @@
+html, body, div, span, h1, h2, h3, h4, p, a, big, em, font, img, s, small, strong,
+tt, var, b,u,i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, table,
+tbody, tfoot, thead, tr, th, td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    font-family: Arial,sans-serif; font-size: 1em;
+}
+
+.header-bar {
+    background: #333333;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    z-index: 10;
+}
+
+.header-bits {
+    color: white;
+    margin: 1px;
+    cursor: pointer;
+}
+
+.header-btn {
+    height: 30px;
+    float: left;
+    font-size: 150%;
+    font-weight: bold;
+}
+
+.header-btn-selected {
+    background-color: #999999;
+}
+
+.header-btn-label {
+    margin: 0 8px 0 2px;
+}
+
+.currently-viewing-information {
+    margin: 0 auto;
+    position: relative;
+    width: 500px;
+    color: whitesmoke;
+    font-size: 120%;
+    top: 1px;
+    text-align: center;
+}
+
+.title-element {
+    position: absolute;
+    left: 43%;
+    top: 30%;
+}
+
+.viewport-container {
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    top: 30px;
+}
+
+.remote-connection-container {
+    position: absolute;
+    background: #F0F0F0;
+    width: 700px;
+    top: 40px;
+    left: -740px;
+    height: 300px;
+    z-index:5;
+    border: 1px solid;
+    border-radius: 5px;
+}
+
+.remote-connection-list {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border-radius: 0 0 5px 5px;
+    background: #FFFFFF;
+}
+
+.remote-interact-panel {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border-radius: 0 0 5px 5px;
+    background: #FFFFFF;
+    display: none;
+}
+
+.remote-connection-container-title {
+    position: absolute;
+    top: 5px;
+    left: 230px;
+}
+
+.cosmo-summary-element-container {
+    height: 200px;
+    margin: 10px;
+}
+
+.summary-thumb-container {
+    position: absolute;
+    height: 92px;
+    width: 200px;
+}
+
+.summary-description-container {
+    position: relative;
+    top: 7px;
+    left: 204px;
+    height: 81px;
+    width: 353px;
+    overflow:auto;
+}
+
+.summary-contents-container {
+    height: 180px;
+    border: 1px solid;
+    border-radius: 0 0 5px 5px;
+}
+
+.summary-title-bar {
+    position: relative;
+    background-color: #000;
+    height: 20px;
+    top: 0;
+    border-radius: 5px 5px 0 0;
+}
+
+.summary-title-bar-contents {
+    color: white;
+    margin: 2px 0 0 8px;
+}
+
+.item-summary-code-revision {
+    font-family: Courier, "Courier New", monospace;
+}
+
+.run-summary-description-container {
+    position: relative;
+    top: 13px;
+    left: 10px;
+    right: 13px;
+    height: 71px;
+    width: 543px;
+}
+
+.run-summary-parameters-table {
+    position: relative;
+    left: 68px;
+    top: 3px;
+    width: 80%;
+}
+
+.run-summary-parameters-table-title {
+    position: relative;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+.cosmo-remote-connection-table {
+    position: absolute;
+    width: 100%;
+}
+
+.search-elt {
+    float: left;
+    margin: 2px 3px 0 2px;
+}
+
+.search-results-text {
+    float: right;
+    margin: 5px 3px;
+    padding: 4px 2px 0 1px;
+}
+
+.attr-name-field, .attr-value-field {
+    width: 140px;
+}
+
+.cosmodata {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 600px;
+    overflow: auto;
+}
+
+.image-bordered-description {
+    position: absolute;
+    top: 0;
+    background-color: #aaaaaa;
+    border-radius: 5px 5px 0 0;
+}
+
+.full-size-image {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.visualization-pane {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.cosmology-image-pane {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.pvweb-iframe-pane {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    zIndex: 1;
+    display: none;
+}
+
+.cosmology-data-pane {
+    bottom: 0;
+    left: -600px;
+    position: fixed;
+    top: 30px;
+    width: 600px;
+}
+
+.cosmo-element-title-bar {
+    position: absolute;
+    width: 399px;
+    height: 30px;
+    top: -30px;
+    background-color: rgba(150, 150, 150, 1.0);
+    border-radius: 3px 3px 0 0;
+}
+
+.close-cosmo-element-btn {
+    color: black;
+    cursor: pointer;
+    z-index: 10;
+    position: absolute;
+    right: 3px;
+    top: 3px;
+    font-size: 130%;
+}
+
+.cosmo-element-container {
+    border: 1px solid;
+    border-radius: 1px;
+    height: 515px;
+    width: 398px;
+    margin-bottom: 4px;
+    position: fixed;
+    top: 100px;
+    left: 100px;
+    background-color: rgba(220, 220, 220, 1.0);
+}
+
+.cosmo-element-title-text {
+    position: relative;
+    font-size: 110%;
+    top: 5px;
+    left: 5px;
+}
+
+.image-thumb {
+    cursor: pointer;
+}
+
+.show-metadata-btn {
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    border-radius: 0 3px 0 0;
+    cursor: pointer;
+    color: white;
+}
+
+.thumb-container {
+    position: absolute;
+    height: 68px;
+    width: 399px;
+}
+
+.ptsden_px_sum {
+    position: absolute;
+    left: 2px;
+    top: 2px;
+}
+
+.magden_px_sum {
+    position: absolute;
+    left: 68px;
+    top: 2px;
+}
+
+.halos_px_sum {
+    position: absolute;
+    left: 134px;
+    top: 2px;
+}
+
+.vol_px {
+    position: absolute;
+    left: 2px;
+    top: 2px;
+}
+
+.vol_py {
+    position: absolute;
+    top: 2px;
+    left: 68px;
+}
+
+.vol_pz {
+    position: absolute;
+    top: 2px;
+    left: 134px;
+}
+
+.pts_px {
+    position: absolute;
+    left: 200px;
+    top: 2px;
+}
+
+.pts_py {
+    position: absolute;
+    left: 266px;
+    top: 2px;
+}
+
+.pts_pz {
+    position: absolute;
+    left: 332px;
+    top: 2px;
+}
+
+.meta-row {
+    width: 100%
+}
+
+.meta-key {
+    float: left;
+}
+
+.meta-value {
+    float: right;
+}
+
+.description-container {
+    position: relative;
+    top: 70px;
+    left: 2px;
+    height: 443px;
+    width: 395px;
+    /* overflow: auto; */
+}
+
+.metadata-table-title {
+    position: relative;
+    left: 127px;
+}
+
+.launch-pvweb-button-halos {
+    cursor: pointer;
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 64px;
+}
+
+.launch-pvweb-button-magvolren {
+    cursor: pointer;
+    position: absolute;
+    bottom: 2px;
+    left: 68px;
+    width: 64px;
+}
+
+.launch-pvweb-button-ptsvolren {
+    cursor: pointer;
+    position: absolute;
+    bottom: 2px;
+    left: 2px;
+    width: 64px;
+}
+
+.pvweb-iframe {
+    position: absolute;
+    background: white;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    border: 0;
+}
+
+.login-screen {
+    background: white;
+    position: absolute;
+    left: 200px;
+    top: 100px;
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 10px;
+    z-index: 1;
+}
+
+.ssh-authentication-widget {
+    background: white;
+    position: absolute;
+    left: 200px;
+    top: 100px;
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 10px;
+    z-index: 8;
+}
+
+.interact-panel-title {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 28px;
+}
+
+.interact-title-info {
+    float: left;
+}
+
+.close-interact-btn {
+    float: right;
+}
+
+.command-input-div {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 28px;
+    bottom: 177px;
+}
+
+.command-entry-field {
+    width: 693px;
+    height: 35px;
+    resize: none;
+}
+
+.command-input-hint, .command-output-hint {
+    color: #707070;
+}
+
+.command-output-div {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100px;
+    bottom: 0;
+}
+
+.command-results-field {
+    width: 693px;
+    height: 142px;
+    resize: none;
+}
+
+.job-status-indicator {
+    background: rgba(150, 150, 150, 1.0);
+    position: absolute;
+    top: 3px;
+    bottom: 3px;
+    width: 180px;
+    right: 3px;
+    border-radius: 5px;
+    z-index: 11;
+}
+
+.job-status-busy-spinner {
+    position: absolute;
+    bottom: 1px;
+    left: -2px;
+    color: white;
+    display: none;
+    font-size: 120%;
+}
+
+.job-status-ready-btn {
+    position: absolute;
+    bottom: -3px;
+    left: -3px;
+    color: #666666;
+    display: none;
+    font-size: 150%;
+}
+
+.job-status-ready-btn.fresh:hover {
+    color: #000000;
+}
+
+.job-status-remove-btn {
+    position: absolute;
+    bottom: -3px;
+    left: -6px;
+    color: #666666;
+    display: none;
+    font-size: 170%;
+}
+
+.job-status-remove-btn:hover {
+    color: #000000;
+}
+
+.job-status-label-id {
+    position: absolute;
+    top: 4px;
+    height: 20px;
+    right: 3px;
+    color: white;
+}
+
+.job-status-label-status {
+    position: absolute;
+    top: 3px;
+    left: 35px;
+    color: white;
+}
+
+#job-status-indicator-template {
+    display: none;
+}
+
+.hidden-closer-div {
+    display: none;
+}
+
+.files-contents-container {
+    position: absolute;
+    top: 21px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border: 1px solid;
+}
+
+.files-contents-button-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background-color: #cccccc;
+}
+
+.file-contents-btn-label {
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+    color: #ffffff;
+    top: 10px;
+}
+
+.file-contents-btn-long-label {
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+    color: #ffffff;
+    top: 1px;
+}
+
+.files-contents-header-btn {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 131px;
+    cursor: pointer;
+}
+
+.files-contents-header-btn-selected {
+    background-color: #aaaaaa;
+}
+
+.files-contents-show-indat-btn {
+    left: 0;
+}
+
+.files-contents-show-config-btn {
+    left: 131px;
+}
+
+.files-contents-show-analysis-btn {
+    left: 262px;
+}
+
+.files-contents-text {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.files-contents-text-textarea {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    background-color: #eeeeee;
+}
