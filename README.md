@@ -11,4 +11,4 @@ The goals of this project include providing a mechanism to give scientists web-b
 Documentation
 -------------
 
-Please see the documentation in the `doc` folder.
+Eventually, documentation will appear in the `doc` folder.
